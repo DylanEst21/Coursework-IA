@@ -3,7 +3,7 @@
 
 clear; close all; clc;
 
-%We define data paths
+%We define the data paths we are going to need
 dataFolder = "smartphone_data"; 
 trainFolder = fullfile(dataFolder, "Train");
 testFolder = fullfile(dataFolder, "Test");
