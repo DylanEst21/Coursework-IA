@@ -16,7 +16,7 @@ valFolder   = fullfile(rootFolder, 'validation');
 testFolder  = fullfile(rootFolder, 'evaluation');
 
 
-% Approach A: Use all images in each folder
+% We choose Approach A: Use all images in each folder
 
 imdsTrain = imageDatastore(trainFolder, ...
     'IncludeSubfolders', true, ...
@@ -31,7 +31,7 @@ imdsTest  = imageDatastore(testFolder, ...
     'LabelSource','foldernames');
 
 
-%% Step 3: Basic Info
+%% Step 3: We display Basic Info
 disp('==== DATASET INFO ====');
 disp(['Training set: ', num2str(numel(imdsTrain.Files)), ' images']);
 disp(['Validation set: ', num2str(numel(imdsVal.Files)), ' images']);
@@ -47,8 +47,7 @@ augTrain = augmentedImageDatastore(inputSize, imdsTrain);
 augVal   = augmentedImageDatastore(inputSize, imdsVal);
 augTest  = augmentedImageDatastore(inputSize, imdsTest);
 
-% Identify which layer to extract features from.
-% Common choices for GoogLeNet: 'pool5-7x7_s1' (1024-dim) or 'loss3-classifier' (1000-dim).
+
 % We picked 'pool5-7x7_s1' for a 1024-dimensional feature vector.
 
 featureLayer = 'pool5-7x7_s1';      %One of the deeper layers
