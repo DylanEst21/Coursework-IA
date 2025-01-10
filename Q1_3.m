@@ -17,7 +17,6 @@ end
 
 
 %% Step 2: Create Training, Validation and Test Datastrores
-% Specify the root folder where "Food-11" dataset is located
 rootFolder = 'Food-11';
 
 % Define the sub-folders for training, validation, and evaluation
