@@ -25,12 +25,10 @@ valFolder   = fullfile(rootFolder, 'validation');
 testFolder  = fullfile(rootFolder, 'evaluation');
 
 %% Step 3: CREATE IMAGE DATASTORES FOR TRAIN, VALIDATION, TEST 
-% --> CHOOSE DATA SPLIT APPROACH !!!
+% --> We can choose the datasplit approach !!!
 
 
-% =========================================
 % Approach A: USE ALL IMAGES IN EACH FOLDER
-% =========================================
 
 % --> This approach simply takes all images in training, validation, and evaluation
 % Use all images in each folder (training, validation, evaluation).
@@ -56,9 +54,8 @@ imdsTest = imageDatastore(testFolder, ...
 
 
 %{
-% ======================================================
 % Approach B (COMMENTED OUT): LIMIT EACH CLASS TO 30/5/5
-% ======================================================
+%
 % In this approach, we randomly select 30 images per class from 'training',
 % 5 images per class from 'validation', and 5 images per class from 'evaluation',
 % ignoring any surplus. Limit each class to 30/5/5 images from training, validation, evaluation, respectively.
@@ -69,7 +66,7 @@ numValPerClass = 5;
 numTestPerClass = 5;
 
 
-% --- Training (30/class) ---
+%Training (30/class)
 imdsFullTrain = imageDatastore(trainFolder, ...
     'IncludeSubfolders', true, ...
     'LabelSource','foldernames');
@@ -90,7 +87,7 @@ end
 imdsTrain = imageDatastore(trainFiles, 'Labels', trainLabels);
 
 
-% --- Validation (5/class) ---
+%Validation (5/class)
 imdsFullVal = imageDatastore(valFolder, ...
     'IncludeSubfolders', true, ...
     'LabelSource','foldernames');
@@ -110,7 +107,7 @@ end
 imdsVal = imageDatastore(valFiles, 'Labels', valLabels);
 
 
-% --- Test (5/class) ---
+%Test (5/class)
 imdsFullTest = imageDatastore(testFolder, ...
     'IncludeSubfolders', true, ...
     'LabelSource','foldernames');
@@ -129,10 +126,6 @@ for iClass = 1:numel(tblTest.Label)
 end
 imdsTest = imageDatastore(testFiles, 'Labels', testLabels);
 
-% END OF SUBSET APPROACH
-
-
-
 %}
 
 
@@ -150,8 +143,7 @@ disp(['Number of classes: ', num2str(numel(unique(imdsTrain.Labels)))]);
 disp('==================================================');
 
 
-% You might want to verify each class has enough images in each subset:
-% Vérifier les classes et les déséquilibres éventuels:
+% We verify each class has enough images in each subset:
 disp('Classes dans l’ensemble d’entraînement :');
 disp(countEachLabel(imdsTrain));
 
@@ -164,7 +156,7 @@ disp(countEachLabel(imdsTest));
 
 
 %{
-Figure 3: Small grid of 16 randomly selected training images from the dataset, showcasing different food items for classification.
+%We show small grid for Figure 3
 numTrainImages = numel(imdsTraining.Labels);  
 idx = randperm(numTrainImages, 16);  
 
@@ -219,11 +211,9 @@ svmModel = fitcecoc(featuresTrain, labelsTrain);
 predTrainSVM = predict(svmModel, featuresTrain);
 accTrainSVM  = mean(predTrainSVM == labelsTrain)*100;
 
-% Predict on Validation data
 predValSVM = predict(svmModel, featuresVal);
 accValSVM  = mean(predValSVM == labelsVal)*100;
 
-% Predict on Test data
 predTestSVM = predict(svmModel, featuresTest);
 accTestSVM  = mean(predTestSVM == labelsTest)*100;
 
@@ -240,7 +230,6 @@ title('SVM Confusion Matrix (Test Set)');
 %% Step 5.2: TRAIN & EVALUATE KNN CLASSIFIER
 disp('Training KNN classifier on extracted features...');
 
-% Choose the number of neighbors
 kNeighbors = 5;
 
 knnModel = fitcknn(featuresTrain, labelsTrain, 'NumNeighbors', kNeighbors);
@@ -249,11 +238,9 @@ knnModel = fitcknn(featuresTrain, labelsTrain, 'NumNeighbors', kNeighbors);
 predTrainKNN = predict(knnModel, featuresTrain);
 accTrainKNN  = mean(predTrainKNN == labelsTrain)*100;
 
-% Predict on Validation data
 predValKNN = predict(knnModel, featuresVal);
 accValKNN  = mean(predValKNN == labelsVal)*100;
 
-% Predict on Test data
 predTestKNN = predict(knnModel, featuresTest);
 accTestKNN  = mean(predTestKNN == labelsTest)*100;
 
