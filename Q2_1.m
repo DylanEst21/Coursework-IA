@@ -64,7 +64,7 @@ for i = 1:length(categoriesList)
     Y_balanced = [Y_balanced; Y_train(idx)];
 end
 
-% Verify class distribution after balancing
+%Verify class distribution after balancing
 disp("Post-balancing class distribution:");
 disp(countcats(Y_balanced));
 
@@ -141,7 +141,7 @@ end
 
 
 
-% Display sequence dimensions
+%We display the sequence dimensions
 fprintf('Training Sequences: %d sequences, each of size [%d x %d]\n', ...
     length(X_train_seq), size(X_train_seq{1},1), size(X_train_seq{1},2));
 fprintf('Validation Sequences: %d sequences, each of size [%d x %d]\n', ...
@@ -150,6 +150,7 @@ fprintf('Final Test Sequences: %d sequences, each of size [%d x %d]\n', ...
     length(X_test_seq), size(X_test_seq{1},1), size(X_test_seq{1},2));
 
 
+%{
 % Display a sample training sequence
 figure;
 imagesc(X_train_seq{1});
@@ -157,12 +158,13 @@ title('Sample Training Sequence');
 xlabel('Time Steps');
 ylabel('Features');
 colorbar;
+%}
 
 
 %% Section 2: Define LSTM Network Architecture
 
-%We define number of features and classes
-numFeatures = size(X_train_seq{1}, 1);      %Num of features (561)
+%We define the number of features and classes
+numFeatures = size(X_train_seq{1}, 1);      %Num of features
 numClasses = numel(categories(Y_train));        %Num of activity classes
 
 
