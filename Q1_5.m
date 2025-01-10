@@ -1,6 +1,6 @@
 
 %% Part iv.ii): Transfer Learning with GoogLeNet (Experiment 4)
-% We have a layer graph "lgraph_1" exported from
+% We have a layer graph "lgraph_1" exported from the tool
 % Deep Network Designer, containing the final layers for 11 classes.
 
 clear; clc; close all;
