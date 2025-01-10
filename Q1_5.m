@@ -6,7 +6,6 @@
 clear; clc; close all;
 
 %% Step 1: Load the modified network structure
-% If you saved it as a .mat file, load it here:
 if exist('modified_googlenet_layers.mat','file')
     load('modified_googlenet_layers.mat','lgraph_1');
 else
