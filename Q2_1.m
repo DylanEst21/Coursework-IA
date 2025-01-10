@@ -36,6 +36,7 @@ Y_train = categorical(y_train, activityLabels.ActivityID, activityLabels.Activit
 Y_test = categorical(y_test, activityLabels.ActivityID, activityLabels.ActivityName);
 
 %The features are already normalized according to the information in README.txt
+%so we skip this step.
 
 %Class Balancing by Oversampling Minority Classes
 fprintf("Balancing classes by oversampling minority classes...\n");
